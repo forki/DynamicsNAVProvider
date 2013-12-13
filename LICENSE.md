@@ -1,4 +1,4 @@
-Copyright 2013, Ross McKinlay
+Copyright 2013, Steffen Forkmann, Ross McKinlay
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
