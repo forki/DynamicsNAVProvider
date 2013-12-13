@@ -4,9 +4,9 @@ open System
 open System.Linq
 open FSharp.Data
 
-type sql = DynamicsNAV<"Data Source=SFORKMANN;Initial Catalog=UWW;Integrated Security=True",
+type NAV = DynamicsNAV<"Data Source=SFORKMANN;Initial Catalog=UWW;Integrated Security=True",
                            Company="Test">
-let ctx = sql.GetDataContext()
+let db = NAV.GetDataContext()
 
-for bank in ctx.``Bank Branch No.`` do
+for bank in db.``Bank Branch No.`` do
     printfn "%s %A" bank.``Bank Name`` bank.``Bank Branch No. Leader``

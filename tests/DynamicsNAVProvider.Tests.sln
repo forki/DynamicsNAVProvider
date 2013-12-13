@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "SqlProvider.Tests", "SqlProvider.Tests.fsproj", "{4EEA1AD8-E8A9-4D54-BC39-D5F536366945}"
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "DynamicsNAVProvider.Tests", "DynamicsNAVProvider.Tests.fsproj", "{4EEA1AD8-E8A9-4D54-BC39-D5F536366945}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
