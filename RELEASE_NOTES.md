@@ -1,2 +1,2 @@
-#### 0.0.1-alpha - 11.12.2013 
-* Initial release of FileSystemProvider
+#### 0.0.1-alpha - 13.12.2013 
+* Initial release of DynamicsNAVProvider
