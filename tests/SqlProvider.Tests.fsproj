@@ -8,7 +8,7 @@
     <ProjectGuid>4eea1ad8-e8a9-4d54-bc39-d5f536366945</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>XrmProvider</RootNamespace>
-    <AssemblyName>FSharp.Data.SqlProvider</AssemblyName>
+    <AssemblyName>FSharp.Data.SqlProvider.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <Name>Samples.Xrm.Provider</Name>
     <SccProjectName>SAK</SccProjectName>
@@ -26,9 +26,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <WarningLevel>3</WarningLevel>
     <DocumentationFile>bin\Debug\XrmProvider.XML</DocumentationFile>
-    <StartAction>Program</StartAction>
-    <StartProgram>C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\devenv.exe</StartProgram>
-    <StartArguments>C:\Users\Steffen\Dropbox\Code\SqlProvider\tests\SQLProvider.Tests.sln</StartArguments>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -56,21 +53,14 @@
   </Choose>
   <Import Project="$(FSharpTargetsPath)" Condition="Exists('$(FSharpTargetsPath)')" />
   <ItemGroup>
-    <Compile Include="ProvidedTypes-head.fs">
-      <Link>ProvidedTypes-head.fs</Link>
-    </Compile>
-    <Compile Include="Operators.fs" />
-    <Compile Include="SqlSchema.fs" />
-    <Compile Include="SqlRuntime.Patterns.fs" />
-    <Compile Include="SqlRuntime.Common.fs" />
-    <Compile Include="Providers.MsSqlServer.fs" />
-    <Compile Include="SqlRuntime.QueryExpression.fs" />
-    <Compile Include="SqlRuntime.Linq.fs" />
-    <Compile Include="SqlDesignTime.fs" />
+    <Compile Include="DynamicsNAV.Tests.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Core, Version=$(TargetFSharpCoreVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <Private>True</Private>
+    </Reference>
+    <Reference Include="FSharp.Data.SqlProvider">
+      <HintPath>..\src\bin\Debug\FSharp.Data.SqlProvider.dll</HintPath>
     </Reference>
     <Reference Include="FSharp.Data.TypeProviders, Version=4.3.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <Reference Include="mscorlib" />

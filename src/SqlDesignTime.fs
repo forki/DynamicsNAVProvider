@@ -29,7 +29,8 @@ type SqlTypeProvider(config: TypeProviderConfig) as this =
     let ns = "FSharp.Data.Sql"     
     let asm = Assembly.GetExecutingAssembly()
     
-    let createTypes(conString,(*nullables,*)dbVendor,individualsAmount,rootTypeName) =       
+    let createTypes(conString,(*nullables,*)individualsAmount,rootTypeName) =       
+        let dbVendor = Common.DatabaseProviderTypes.MSSQLSERVER
         let prov = Common.Utilities.createSqlProvider dbVendor
         let con = prov.CreateConnection conString
         con.Open()
@@ -265,21 +266,18 @@ type SqlTypeProvider(config: TypeProviderConfig) as this =
             ])
         rootType
     
-    let paramSqlType = ProvidedTypeDefinition(sqlRuntimeInfo.RuntimeAssembly, ns, "SqlDataProvider", Some(typeof<obj>), HideObjectMethods = true)
+    let paramSqlType = ProvidedTypeDefinition(sqlRuntimeInfo.RuntimeAssembly, ns, "DynamicsNAV", Some(typeof<obj>), HideObjectMethods = true)
     
     let conString = ProvidedStaticParameter("ConnectionString",typeof<string>)    
     //let nullables = ProvidedStaticParameter("UseNullableValues",typeof<bool>,false)
-    let dbVendor = ProvidedStaticParameter("DatabaseVendor",typeof<DatabaseProviderTypes>,DatabaseProviderTypes.MSSQLSERVER)
     let individualsAmount = ProvidedStaticParameter("IndividualsAmount",typeof<int>,1000)    
-    let helpText = "<summary>Typed representation of a database</summary>
+    let helpText = "<summary>Typed representation of a Dynamics NAV database</summary>
                     <param name='ConnectionString'>The connection string for the sql server</param>
-                    <param name='DatabaseVendor'> The target database vendor</param>
                     <param name='IndividualsAmount'>The amount of sample entities to project into the type system for each sql entity type. Default 1000.</param>"
         
-    do paramSqlType.DefineStaticParameters([conString;dbVendor;individualsAmount;], fun typeName args -> 
-        createTypes(args.[0] :?> string,                  // OrganizationServiceUrl
-                    args.[1] :?> DatabaseProviderTypes,   // db vendor
-                    args.[2] :?> int,                     // Indivudals Amount
+    do paramSqlType.DefineStaticParameters([conString;individualsAmount;], fun typeName args -> 
+        createTypes(args.[0] :?> string,                  // OrganizationServiceUrl                    
+                    args.[1] :?> int,                     // Indivudals Amount
                     typeName))
 
     do paramSqlType.AddXmlDoc helpText               
