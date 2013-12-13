@@ -36,11 +36,16 @@ type NAV = DynamicsNAV<"Data Source=SFORKMANN;Initial Catalog=UWW;Integrated Sec
                            Company="Test">
 let db = NAV.GetDataContext()
 
-// now you have type access to the whole database
-for bank in db.``Bank Branch No.`` do
-    printfn "%s %A" bank.``Bank Name`` bank.``Bank Branch No. Leader``
+// now you have typed access to the whole Dynamics NAV database
+
+// look into the sales headers
+for sh in db.``Sales Header`` do
+    printfn "%s %s" sh.``Sell-to Customer No.`` sh.``Salesperson Code``
 
 (**
+
+![alt text](img/TypedDynamicsNAV.png "Intellisense for Dynamics NAV")
+
 
 Samples & documentation
 -----------------------

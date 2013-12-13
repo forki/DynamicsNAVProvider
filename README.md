@@ -11,4 +11,4 @@ A Microsoft Dynamics NAV type provider, supporting LINQ queries, schema explorat
 
 run build.cmd
 
-<a href="http://forki.github.io/DynamicsNAVProvider" target="_blank">API documents available here.</a>
+<a href="http://forki.github.io/DynamicsNAVProvider" target="_blank">Documentation is available here.</a>
