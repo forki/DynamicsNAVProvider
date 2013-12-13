@@ -29,7 +29,7 @@ type SqlTypeProvider(config: TypeProviderConfig) as this =
     let ns = "FSharp.Data.Sql"     
     let asm = Assembly.GetExecutingAssembly()
     
-    let createTypes(conString,(*nullables,*)individualsAmount,rootTypeName) =       
+    let createTypes(conString,(*nullables,*)companyName,individualsAmount,rootTypeName) =       
         let dbVendor = Common.DatabaseProviderTypes.MSSQLSERVER
         let prov = Common.Utilities.createSqlProvider dbVendor
         let con = prov.CreateConnection conString
@@ -221,7 +221,7 @@ type SqlTypeProvider(config: TypeProviderConfig) as this =
             [ yield sprocContainer :> MemberInfo
               for (KeyValue(key,(t,desc,_))) in baseTypes.Force() do
                 let (ct,it) = baseCollectionTypes.Force().[key]
-                let prop = ProvidedProperty(ct.Name.Substring(0,ct.Name.LastIndexOf("]")+1),ct, GetterCode = fun args -> <@@ SqlDataContext._CreateEntities(key) @@> )
+                let prop = ProvidedProperty(ct.Name.Substring(0,ct.Name.LastIndexOf("]")+1).Replace(companyName+"$",""),ct, GetterCode = fun args -> <@@ SqlDataContext._CreateEntities(key) @@> )
                 prop.AddXmlDoc (sprintf "<summary>%s</summary>" desc)
                 yield t :> MemberInfo
                 yield ct :> MemberInfo
@@ -270,14 +270,17 @@ type SqlTypeProvider(config: TypeProviderConfig) as this =
     
     let conString = ProvidedStaticParameter("ConnectionString",typeof<string>)    
     //let nullables = ProvidedStaticParameter("UseNullableValues",typeof<bool>,false)
+    let companyName = ProvidedStaticParameter("Company",typeof<string>)    
     let individualsAmount = ProvidedStaticParameter("IndividualsAmount",typeof<int>,1000)    
     let helpText = "<summary>Typed representation of a Dynamics NAV database</summary>
                     <param name='ConnectionString'>The connection string for the sql server</param>
+                    <param name='Company'>The company</param>
                     <param name='IndividualsAmount'>The amount of sample entities to project into the type system for each sql entity type. Default 1000.</param>"
         
-    do paramSqlType.DefineStaticParameters([conString;individualsAmount;], fun typeName args -> 
+    do paramSqlType.DefineStaticParameters([conString;companyName;individualsAmount;], fun typeName args -> 
         createTypes(args.[0] :?> string,                  // OrganizationServiceUrl                    
-                    args.[1] :?> int,                     // Indivudals Amount
+                    args.[1] :?> string,                  // Company
+                    args.[2] :?> int,                     // Indivudals Amount
                     typeName))
 
     do paramSqlType.AddXmlDoc helpText               
