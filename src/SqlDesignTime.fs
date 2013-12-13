@@ -31,6 +31,7 @@ type SqlTypeProvider(config: TypeProviderConfig) as this =
     let asm = Assembly.GetExecutingAssembly()
     
     let createTypes(conString,(*nullables,*)companyName,individualsAmount,rootTypeName) =       
+        let companyName = encapsulateCompanyName companyName
         let dbVendor = Common.DatabaseProviderTypes.MSSQLSERVER
         let prov = Common.Utilities.createSqlProvider dbVendor
         let con = prov.CreateConnection conString

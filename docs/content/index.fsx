@@ -33,7 +33,7 @@ open FSharp.Data
 // configure the Dynamics NAV type provider with a connection string to the db
 // and set the company
 type NAV = DynamicsNAV<"Data Source=SFORKMANN;Initial Catalog=UWW;Integrated Security=True",
-                           Company="Company 1">
+                           Company="CRONUS International Ltd.">
 let db = NAV.GetDataContext()
 
 // now you have typed access to the whole Dynamics NAV database
@@ -43,6 +43,8 @@ for sh in db.``Sales Header`` do
     printfn "%s %s" sh.``Sell-to Customer No.`` sh.``Salesperson Code``
 
 (**
+
+You will even get Intellisense for all of this:
 
 ![alt text](img/TypedDynamicsNAV.png "Intellisense for Dynamics NAV")
 
