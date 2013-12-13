@@ -52,7 +52,7 @@ for sh in db.``Sales Header`` do
 for company in db.Company do
     printfn "%s" company.Name
 // [fsi: Company 1]
-// [CRONUS International Ltd.]
+// [fsi: CRONUS International Ltd.]
 
 (**
 
