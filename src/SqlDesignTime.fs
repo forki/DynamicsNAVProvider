@@ -17,6 +17,7 @@ open Microsoft.FSharp.Quotations.Patterns
 
 open Samples.FSharp.ProvidedTypes
 open FSharp.Data.Sql.Schema
+open FSharp.Data.Sql.Schema.DynamicsNAVSchema
 
 type internal SqlRuntimeInfo (config : TypeProviderConfig) =
     let runtimeAssembly = Assembly.LoadFrom(config.RuntimeAssembly)    
@@ -26,7 +27,7 @@ type internal SqlRuntimeInfo (config : TypeProviderConfig) =
 type SqlTypeProvider(config: TypeProviderConfig) as this =     
     inherit TypeProviderForNamespaces()
     let sqlRuntimeInfo = SqlRuntimeInfo(config)
-    let ns = "FSharp.Data.Sql"     
+    let ns = "FSharp.Data"
     let asm = Assembly.GetExecutingAssembly()
     
     let createTypes(conString,(*nullables,*)companyName,individualsAmount,rootTypeName) =       
@@ -142,7 +143,7 @@ type SqlTypeProvider(config: TypeProviderConfig) as this =
                     let createColumnProperty ty (name:string) description =
                         let prop = 
                             ProvidedProperty(
-                                name,ty,
+                                dynamicsNAVFieldName name,ty,
                                 GetterCode = (fun args ->
                                     let meth = typeof<SqlEntity>.GetMethod("GetColumn").MakeGenericMethod([|ty|])
                                     Expr.Call(args.[0],meth,[Expr.Value name])),
@@ -216,12 +217,12 @@ type SqlTypeProvider(config: TypeProviderConfig) as this =
                         <@@ SqlDataContext._CallSproc(name,rawNames,rawTypes, %%Expr.NewArray(typeof<obj>,List.map(fun e -> Expr.Coerce(e,typeof<obj>)) args.Tail)) @@>)
                 )
         sprocContainer.AddMembersDelayed(fun _ -> genSprocs())
-
+        
         serviceType.AddMembersDelayed( fun () ->
             [ yield sprocContainer :> MemberInfo
               for (KeyValue(key,(t,desc,_))) in baseTypes.Force() do
                 let (ct,it) = baseCollectionTypes.Force().[key]
-                let prop = ProvidedProperty(ct.Name.Substring(0,ct.Name.LastIndexOf("]")+1).Replace(companyName+"$",""),ct, GetterCode = fun args -> <@@ SqlDataContext._CreateEntities(key) @@> )
+                let prop = ProvidedProperty(dynamicsNAVTableName(companyName,ct.Name),ct, GetterCode = fun args -> <@@ SqlDataContext._CreateEntities(key) @@> )
                 prop.AddXmlDoc (sprintf "<summary>%s</summary>" desc)
                 yield t :> MemberInfo
                 yield ct :> MemberInfo

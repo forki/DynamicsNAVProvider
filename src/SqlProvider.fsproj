@@ -60,6 +60,7 @@
       <Link>ProvidedTypes-head.fs</Link>
     </Compile>
     <Compile Include="Operators.fs" />
+    <Compile Include="DynamicsNAVSchema.fs" />
     <Compile Include="SqlSchema.fs" />
     <Compile Include="SqlRuntime.Patterns.fs" />
     <Compile Include="SqlRuntime.Common.fs" />
