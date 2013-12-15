@@ -59,6 +59,20 @@ for company in db.Company do
 
 (**
 
+Queries
+-------
+
+It's possible to perform LINQ queries against the Dynamics NAV database:
+
+*)
+
+query{ for cus in db.Customer do
+       join sh in db.``Sales Header`` on (cus.``No.`` = sh.``Sell-to Customer No.``)
+       select (cus.Name,sh.``No.``,sh.``Currency Code``) } 
+  |> Seq.toArray
+
+(**
+
 Samples & documentation
 -----------------------
 
