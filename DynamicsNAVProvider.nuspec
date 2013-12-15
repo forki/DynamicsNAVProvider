@@ -5,7 +5,7 @@
     <version>@build.number@</version>
     <authors>@authors@</authors>
     <owners>@authors@</owners>
-    <licenseUrl>http://github.com/forki/DynamicsNAVProvider/blob/master/LICENSE.txt</licenseUrl>
+    <licenseUrl>http://github.com/forki/DynamicsNAVProvider/blob/master/LICENSE.md</licenseUrl>
     <projectUrl>http://forki.github.com/DynamicsNAVProvider</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <summary>@summary@</summary>

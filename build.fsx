@@ -14,7 +14,7 @@ let project = "DynamicsNAVProvider"
 let summary = "Type providers for Dynamics NAV access."
 let description = "Type providers for Dynamics NAV access."
 let authors = ["Steffen Forkmann"; "Ross McKinlay" ]
-let tags = "F# fsharp typeproviders dynamcis nav"
+let tags = "F# fsharp typeproviders dynamics nav"
 
 let solutionFile  = "DynamicsNAVProvider"
 
