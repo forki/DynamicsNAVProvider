@@ -15,7 +15,4 @@
     <tags>@tags@</tags>
     <dependencies />
   </metadata>
-  <files>
-    <file src="FSharp.Data.DynamicsNAVProvider.dll" target="lib/net40" />
-  </files>
 </package>
