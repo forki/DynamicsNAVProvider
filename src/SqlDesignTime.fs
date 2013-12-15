@@ -30,10 +30,10 @@ type SqlTypeProvider(config: TypeProviderConfig) as this =
     let ns = "FSharp.Data"
     let asm = Assembly.GetExecutingAssembly()
     
-    let createTypes(conString,(*nullables,*)companyName,individualsAmount,rootTypeName) =       
+    let createTypes(conString,(*nullables,*)companyName,resolutionPath,individualsAmount,rootTypeName) =       
         let companyName = encapsulateCompanyName companyName
         let dbVendor = Common.DatabaseProviderTypes.MSSQLSERVER
-        let prov = Common.Utilities.createSqlProvider dbVendor
+        let prov = Common.Utilities.createSqlProvider dbVendor resolutionPath
         let con = prov.CreateConnection conString
         con.Open()
         prov.CreateTypeMappings con
@@ -75,7 +75,7 @@ type SqlTypeProvider(config: TypeProviderConfig) as this =
                match prov.GetPrimaryKey table with
                | Some pk ->
                    let entities =   
-                        use com = prov.CreateCommand(con,(sprintf "select top %i * from %s.%s" individualsAmount table.Schema table.Name))
+                        use com = prov.CreateCommand(con,prov.GetIndividualsQueryText(table,individualsAmount))
                         use reader = com.ExecuteReader()
                         SqlEntity.FromDataReader(table.FullName,reader)
                    if entities.IsEmpty then [] else
@@ -218,7 +218,7 @@ type SqlTypeProvider(config: TypeProviderConfig) as this =
                         <@@ SqlDataContext._CallSproc(name,rawNames,rawTypes, %%Expr.NewArray(typeof<obj>,List.map(fun e -> Expr.Coerce(e,typeof<obj>)) args.Tail)) @@>)
                 )
         sprocContainer.AddMembersDelayed(fun _ -> genSprocs())
-        
+
         serviceType.AddMembersDelayed( fun () ->
             [ yield sprocContainer :> MemberInfo
               for (KeyValue(key,(t,desc,_))) in baseTypes.Force() do
@@ -240,7 +240,7 @@ type SqlTypeProvider(config: TypeProviderConfig) as this =
                                 serviceType, IsStaticMethod=true,
                                 InvokeCode = (fun _ -> 
                                     let meth = typeof<SqlDataContext>.GetMethod "_Create"
-                                    Expr.Call(meth, [Expr.Value conString; Expr.Value dbVendor])
+                                    Expr.Call(meth, [Expr.Value conString; Expr.Value dbVendor; Expr.Value resolutionPath])
                                     ))
               meth.AddXmlDoc "<summary>Returns an instance of the Sql provider using the static parameters</summary>"
                    
@@ -259,7 +259,7 @@ type SqlTypeProvider(config: TypeProviderConfig) as this =
                                                             serviceType, IsStaticMethod=true,
                                                             InvokeCode = (fun args ->
                                                                 let meth = typeof<SqlDataContext>.GetMethod "_Create"
-                                                                Expr.Call(meth, [args.[0];Expr.Value dbVendor;])))
+                                                                Expr.Call(meth, [args.[0];Expr.Value dbVendor; Expr.Value resolutionPath])))
                       
               meth.AddXmlDoc "<summary>Retuns an instance of the Sql provider</summary>
                               <param name='connectionString'>The database connection string</param>"
@@ -272,17 +272,22 @@ type SqlTypeProvider(config: TypeProviderConfig) as this =
     
     let conString = ProvidedStaticParameter("ConnectionString",typeof<string>)    
     //let nullables = ProvidedStaticParameter("UseNullableValues",typeof<bool>,false)
-    let companyName = ProvidedStaticParameter("Company",typeof<string>)    
+    let companyName = ProvidedStaticParameter("Company",typeof<string>)
+    let dbVendor = ProvidedStaticParameter("DatabaseVendor",typeof<DatabaseProviderTypes>,DatabaseProviderTypes.MSSQLSERVER)
     let individualsAmount = ProvidedStaticParameter("IndividualsAmount",typeof<int>,1000)    
+    let resolutionPath = ProvidedStaticParameter("ResolutionPath",typeof<string>,"")    
     let helpText = "<summary>Typed representation of a Dynamics NAV database</summary>
                     <param name='ConnectionString'>The connection string for the sql server</param>
                     <param name='Company'>The company</param>
-                    <param name='IndividualsAmount'>The amount of sample entities to project into the type system for each sql entity type. Default 1000.</param>"
+                    <param name='IndividualsAmount'>The amount of sample entities to project into the type system for each sql entity type. Default 1000.</param>
+                    <param name='ResolutionPath'>The location to look for dynamically loaded assemblies containing database vendor specifc connections and custom types.</param>"
         
-    do paramSqlType.DefineStaticParameters([conString;companyName;individualsAmount;], fun typeName args -> 
-        createTypes(args.[0] :?> string,                  // OrganizationServiceUrl                    
+    do paramSqlType.DefineStaticParameters([conString;companyName;resolutionPath;individualsAmount], fun typeName args -> 
+        createTypes(args.[0] :?> string,                  // OrganizationServiceUrl
                     args.[1] :?> string,                  // Company
-                    args.[2] :?> int,                     // Indivudals Amount
+                    args.[2] :?> string,                  // Assembly resolution path for db connectors and custom types
+                    args.[3] :?> int,                     // Indiduals Amount
+                    
                     typeName))
 
     do paramSqlType.AddXmlDoc helpText               
