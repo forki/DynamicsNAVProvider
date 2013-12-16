@@ -17,6 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{D383A6BC-F
 		docs\tools\generate.fsx = docs\tools\generate.fsx
 		docs\content\gettingstarted.fsx = docs\content\gettingstarted.fsx
 		docs\content\index.fsx = docs\content\index.fsx
+		docs\content\queries.fsx = docs\content\queries.fsx
 		docs\tools\templates\template.cshtml = docs\tools\templates\template.cshtml
 	EndProjectSection
 EndProject

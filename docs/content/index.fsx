@@ -21,6 +21,8 @@ It's supporting LINQ queries, schema exploration and much more besides.
   <div class="span1"></div>
 </div>
 
+If you are new to type providers you should read the ["Getting started" article](gettingstarted.html).
+
 Example
 -------
 
@@ -64,8 +66,11 @@ query{ for cus in db.Customer do
        select (cus.Name,sh.``No.``,sh.``Currency Code``) } 
   |> Seq.toArray
 
-  (**
- 
+(**
+
+More about queries can be found in the [Query article](queries.html).
+
+
 Contributing and copyright
 --------------------------
 
