@@ -41,7 +41,7 @@ let db = NAV.GetDataContext()
 
 // now you have typed access to the whole Dynamics NAV database
 
-// look into the sales headers
+// print all sales headers
 for sh in db.``Sales Header`` do
     printfn "%s %s" sh.``Sell-to Customer No.`` sh.``Salesperson Code``
 
@@ -60,5 +60,27 @@ It's possible to perform LINQ queries against the Dynamics NAV database:
 
 query{ for cus in db.Customer do
        join sh in db.``Sales Header`` on (cus.``No.`` = sh.``Sell-to Customer No.``)
+       where (cus.Name.StartsWith "Steffen") 
        select (cus.Name,sh.``No.``,sh.``Currency Code``) } 
   |> Seq.toArray
+
+  (**
+ 
+Contributing and copyright
+--------------------------
+
+The project is hosted on [GitHub][gh] where you can [report issues][issues], fork 
+the project and submit pull requests. If you're adding new public API, please also 
+consider adding [samples][content] that can be turned into a documentation. You might
+also want to read [library design notes][readme] to understand how it works.
+
+The library is available under Public Domain license, which allows modification and 
+redistribution for both commercial and non-commercial purposes. For more information see the 
+[License file][license] in the GitHub repository. 
+
+  [content]: https://github.com/forki/DynamicsNAVProvider/tree/master/docs/content
+  [gh]: https://github.com/forki/DynamicsNAVProvider
+  [issues]: https://github.com/forki/DynamicsNAVProvider/issues
+  [readme]: https://github.com/forki/DynamicsNAVProvider/blob/master/README.md
+  [license]: https://github.com/forki/DynamicsNAVProvider/blob/master/LICENSE.md
+*)
