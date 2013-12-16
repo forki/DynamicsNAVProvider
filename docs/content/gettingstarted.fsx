@@ -24,7 +24,7 @@ It's supporting LINQ queries, schema exploration and much more besides.
 Example
 -------
 
-This example demonstrates the use of the type provider from a F# script file:
+This example demonstrates the use of the type provider:
 
 *)
 // reference the type provider dll
@@ -51,6 +51,16 @@ You will even get Intellisense for all of this:
 
 ![alt text](img/TypedDynamicsNAV.png "Intellisense for Dynamics NAV")
 
+*)
+
+// Retrieve all companies
+for company in db.Company do
+    printfn "%s" company.Name
+// [fsi: Company 1]
+// [fsi: CRONUS International Ltd.]
+
+(**
+
 Queries
 -------
 
@@ -62,3 +72,24 @@ query{ for cus in db.Customer do
        join sh in db.``Sales Header`` on (cus.``No.`` = sh.``Sell-to Customer No.``)
        select (cus.Name,sh.``No.``,sh.``Currency Code``) } 
   |> Seq.toArray
+
+(**
+ 
+Contributing and copyright
+--------------------------
+
+The project is hosted on [GitHub][gh] where you can [report issues][issues], fork 
+the project and submit pull requests. If you're adding new public API, please also 
+consider adding [samples][content] that can be turned into a documentation. You might
+also want to read [library design notes][readme] to understand how it works.
+
+The library is available under Public Domain license, which allows modification and 
+redistribution for both commercial and non-commercial purposes. For more information see the 
+[License file][license] in the GitHub repository. 
+
+  [content]: https://github.com/forki/DynamicsNAVProvider/tree/master/docs/content
+  [gh]: https://github.com/forki/DynamicsNAVProvider
+  [issues]: https://github.com/forki/DynamicsNAVProvider/issues
+  [readme]: https://github.com/forki/DynamicsNAVProvider/blob/master/README.md
+  [license]: https://github.com/forki/DynamicsNAVProvider/blob/master/LICENSE.md
+*)
