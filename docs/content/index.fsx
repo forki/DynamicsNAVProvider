@@ -5,7 +5,9 @@
 DynamicsNAVProvider
 ===================
 
-A type provider which allows to access Microsoft Dynamics NAV data from a SQL Server in a strongly typed way.
+The DynamicsNAVProvider is a type provider which allows to access Microsoft Dynamics NAV data from a SQL Server in a strongly typed way.
+It aims to be a replacement for data access technologies like C/Front.NET but with a much easier API.
+
 It's supporting LINQ queries, schema exploration and much more besides.
 
 <div class="row">
@@ -33,7 +35,7 @@ open FSharp.Data
 
 // configure the Dynamics NAV type provider with a connection string to the db
 // and set the company
-type NAV = DynamicsNAV<"Data Source=SFORKMANN;Initial Catalog=UWW;Integrated Security=True",
+type NAV = DynamicsNAV<"Data Source=OMEGA;Initial Catalog=Dev;Integrated Security=True",
                            Company="CRONUS International Ltd.">
 let db = NAV.GetDataContext()
 
