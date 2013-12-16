@@ -5,7 +5,7 @@
 DynamicsNAVProvider
 ===================
 
-The DynamicsNAVProvider is a type provider which allows to access Microsoft Dynamics NAV data from a SQL Server in a strongly typed way.
+The DynamicsNAVProvider is a [F# type provider](http://msdn.microsoft.com/en-us/library/hh156509.aspx) which allows to access [Microsoft Dynamics NAV](http://www.microsoft.com/en-us/dynamics/erp-nav-overview.aspx) data from a SQL Server in a strongly typed way.
 It aims to be a replacement for data access technologies like C/Front.NET but with a much easier API.
 
 It's supporting LINQ queries, schema exploration and much more besides.
