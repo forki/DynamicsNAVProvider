@@ -17,6 +17,7 @@ open Microsoft.FSharp.Quotations.Patterns
 
 open Samples.FSharp.ProvidedTypes
 open FSharp.Data.Sql.Schema
+open FSharp.Data.Sql.SchemaProjections
 
 type internal SqlRuntimeInfo (config : TypeProviderConfig) =
     let runtimeAssembly = Assembly.LoadFrom(config.RuntimeAssembly)    
@@ -141,7 +142,7 @@ type SqlTypeProvider(config: TypeProviderConfig) as this =
                     let createColumnProperty ty (name:string) description =
                         let prop = 
                             ProvidedProperty(
-                                name,ty,
+                                dynamicsNAVFieldName name,ty,
                                 GetterCode = (fun args ->
                                     let meth = typeof<SqlEntity>.GetMethod("GetColumn").MakeGenericMethod([|ty|])
                                     Expr.Call(args.[0],meth,[Expr.Value name])),
@@ -220,7 +221,7 @@ type SqlTypeProvider(config: TypeProviderConfig) as this =
             [ yield sprocContainer :> MemberInfo
               for (KeyValue(key,(t,desc,_))) in baseTypes.Force() do
                 let (ct,it) = baseCollectionTypes.Force().[key]
-                let prop = ProvidedProperty(ct.Name.Substring(0,ct.Name.LastIndexOf("]")+1),ct, GetterCode = fun args -> <@@ SqlDataContext._CreateEntities(key) @@> )
+                let prop = ProvidedProperty(dynamicsNAVTableName(companyName,ct.Name),ct, GetterCode = fun args -> <@@ SqlDataContext._CreateEntities(key) @@> )
                 prop.AddXmlDoc (sprintf "<summary>%s</summary>" desc)
                 yield t :> MemberInfo
                 yield ct :> MemberInfo
