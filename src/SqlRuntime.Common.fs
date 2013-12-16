@@ -153,6 +153,7 @@ type SqlExp =
     | OrderBy      of alias * string * bool * SqlExp     // alias and column name, bool indicates ascending sort
     | Skip         of int * SqlExp
     | Take         of int * SqlExp
+    | Count        of SqlExp
     
 type internal SqlQuery =
     { Filters       : Condition list
@@ -163,10 +164,11 @@ type internal SqlQuery =
       Distinct      : bool
       UltimateChild : (string * Table) option
       Skip          : int option
-      Take          : int option } 
+      Take          : int option 
+      Count         : bool } 
     with
         static member Empty = { Filters = []; Links = Map.empty; Aliases = Map.empty; Ordering = [];
-                                Projection = None; Distinct = false; UltimateChild = None; Skip = None; Take = None }
+                                Projection = None; Distinct = false; UltimateChild = None; Skip = None; Take = None; Count = false }
 
         static member ofSqlExp(exp,entityIndex: string ResizeArray) =
             let add key item map =
@@ -206,6 +208,9 @@ type internal SqlQuery =
                 | Take(amount, rest) -> 
                     if q.Take.IsSome then failwith "take may only be specified once"
                     else convert { q with Take = Some(amount) } rest
+                | Count(rest) -> 
+                    if q.Count then failwith "count may only be specified once"
+                    else convert { q with Count = true } rest
             convert (SqlQuery.Empty) exp
 
 type internal ISqlProvider =
