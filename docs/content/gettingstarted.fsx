@@ -2,24 +2,14 @@
 #I "../../bin"
 
 (**
-DynamicsNAVProvider
-===================
+Getting started with the DynamicsNAVProvider
+============================================
 
-The DynamicsNAVProvider is a [F# type provider](http://msdn.microsoft.com/en-us/library/hh156509.aspx) which allows to access [Microsoft Dynamics NAV](http://www.microsoft.com/en-us/dynamics/erp-nav-overview.aspx) data from a SQL Server in a strongly typed way.
-It aims to be a replacement for data access technologies like C/Front.NET but with a much easier API.
+Open Visual Studio 2013 and create a new F# Console application. Right-click on the project and select "Manage NuGet Packages".
+Make sure the "Include Prerelease" is selected and search for "[DynamicsNAVProvider](https://nuget.org/packages/DynamicsNAVProvider)" and press "Install":
 
-It's supporting LINQ queries, schema exploration and much more besides.
+![alt text](img/NuGet.png "Install the Dynamics NAV type provider")
 
-<div class="row">
-  <div class="span1"></div>
-  <div class="span6">
-    <div class="well well-small" id="nuget">
-      The library can be <a href="https://nuget.org/packages/DynamicsNAVProvider">installed from NuGet</a>:
-      <pre>PM> Install-Package DynamicsNAVProvider -prerelease</pre>
-    </div>
-  </div>
-  <div class="span1"></div>
-</div>
 
 Example
 -------
