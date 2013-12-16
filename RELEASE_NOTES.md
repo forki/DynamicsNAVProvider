@@ -1,3 +1,6 @@
+#### 0.0.4-alpha - 16.12.2013 
+* Fixing nuget package
+
 #### 0.0.3-alpha - 16.12.2013 
 * Don't add FSharp.Core.dll to nuget package
 
