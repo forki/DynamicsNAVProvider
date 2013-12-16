@@ -17,7 +17,7 @@ open Microsoft.FSharp.Quotations.Patterns
 
 open Samples.FSharp.ProvidedTypes
 open FSharp.Data.Sql.Schema
-open FSharp.Data.Sql.Schema.DynamicsNAVSchema
+open FSharp.Data.Sql.SchemaProjections
 
 type internal SqlRuntimeInfo (config : TypeProviderConfig) =
     let runtimeAssembly = Assembly.LoadFrom(config.RuntimeAssembly)    

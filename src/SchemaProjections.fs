@@ -1,4 +1,4 @@
-﻿module FSharp.Data.Sql.Schema.DynamicsNAVSchema
+﻿module FSharp.Data.Sql.SchemaProjections
 
 let encapsulateCompanyName (companyName:string) =
     companyName.Replace(".","_")
