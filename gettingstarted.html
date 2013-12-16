@@ -110,13 +110,15 @@ Make sure the "Include Prerelease" is selected and search for "<a href="https://
 <span class="l">2: </span>
 <span class="l">3: </span>
 <span class="l">4: </span>
+<span class="l">5: </span>
 </pre>
 </td>
 <td class="snippet"><pre class="fssnip">
 <span onmouseout="hideTip(event, 'fs14', 22)" onmouseover="showTip(event, 'fs14', 22)" class="i">query</span>{ <span class="k">for</span> <span onmouseout="hideTip(event, 'fs15', 23)" onmouseover="showTip(event, 'fs15', 23)" class="i">cus</span> <span class="k">in</span> <span onmouseout="hideTip(event, 'fs7', 24)" onmouseover="showTip(event, 'fs7', 24)" class="i">db</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs16', 25)" onmouseover="showTip(event, 'fs16', 25)" class="i">Customer</span> <span class="k">do</span>
        <span onmouseout="hideTip(event, 'fs17', 26)" onmouseover="showTip(event, 'fs17', 26)" class="k">join</span> <span onmouseout="hideTip(event, 'fs9', 27)" onmouseover="showTip(event, 'fs9', 27)" class="i">sh</span> <span class="k">in</span> <span onmouseout="hideTip(event, 'fs7', 28)" onmouseover="showTip(event, 'fs7', 28)" class="i">db</span><span class="o">.</span><span class="i">``Sales Header``</span> <span class="i">on</span> (<span class="i">cus</span><span class="o">.</span><span class="i">``No.``</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs9', 29)" onmouseover="showTip(event, 'fs9', 29)" class="i">sh</span><span class="o">.</span><span class="i">``Sell-to Customer No.``</span>)
-       <span onmouseout="hideTip(event, 'fs18', 30)" onmouseover="showTip(event, 'fs18', 30)" class="k">select</span> (<span onmouseout="hideTip(event, 'fs15', 31)" onmouseover="showTip(event, 'fs15', 31)" class="i">cus</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs19', 32)" onmouseover="showTip(event, 'fs19', 32)" class="i">Name</span>,<span onmouseout="hideTip(event, 'fs9', 33)" onmouseover="showTip(event, 'fs9', 33)" class="i">sh</span><span class="o">.</span><span class="i">``No.``</span>,<span onmouseout="hideTip(event, 'fs9', 34)" onmouseover="showTip(event, 'fs9', 34)" class="i">sh</span><span class="o">.</span><span class="i">``Currency Code``</span>) } 
-  <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs20', 35)" onmouseover="showTip(event, 'fs20', 35)" class="i">Seq</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs21', 36)" onmouseover="showTip(event, 'fs21', 36)" class="i">toArray</span></pre>
+       <span onmouseout="hideTip(event, 'fs18', 30)" onmouseover="showTip(event, 'fs18', 30)" class="k">where</span> (<span onmouseout="hideTip(event, 'fs15', 31)" onmouseover="showTip(event, 'fs15', 31)" class="i">cus</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs19', 32)" onmouseover="showTip(event, 'fs19', 32)" class="i">Name</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs20', 33)" onmouseover="showTip(event, 'fs20', 33)" class="i">StartsWith</span> <span class="s">&quot;</span><span class="s">Steffen</span><span class="s">&quot;</span>) 
+       <span onmouseout="hideTip(event, 'fs21', 34)" onmouseover="showTip(event, 'fs21', 34)" class="k">select</span> (<span onmouseout="hideTip(event, 'fs15', 35)" onmouseover="showTip(event, 'fs15', 35)" class="i">cus</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs19', 36)" onmouseover="showTip(event, 'fs19', 36)" class="i">Name</span>,<span onmouseout="hideTip(event, 'fs9', 37)" onmouseover="showTip(event, 'fs9', 37)" class="i">sh</span><span class="o">.</span><span class="i">``No.``</span>,<span onmouseout="hideTip(event, 'fs9', 38)" onmouseover="showTip(event, 'fs9', 38)" class="i">sh</span><span class="o">.</span><span class="i">``Currency Code``</span>) } 
+  <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs22', 39)" onmouseover="showTip(event, 'fs22', 39)" class="i">Seq</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs23', 40)" onmouseover="showTip(event, 'fs23', 40)" class="i">toArray</span></pre>
 </td>
 </tr>
 </table><h2>Contributing and copyright</h2>
@@ -147,10 +149,12 @@ redistribution for both commercial and non-commercial purposes. For more informa
 <div class="tip" id="fs15">val cus : DynamicsNAV&lt;...&gt;.SqlService.[dbo].[CRONUS International Ltd_$Customer]Entity</div>
 <div class="tip" id="fs16">property DynamicsNAV&lt;...&gt;.SqlService.Customer: DynamicsNAV&lt;...&gt;.SqlService.[dbo].[CRONUS International Ltd_$Customer]Set<br /><em><br /><br />&lt;summary&gt;The base table CRONUS International Ltd_$Customer belonging to schema dbo&lt;/summary&gt;</em></div>
 <div class="tip" id="fs17">custom operation: join var in collection on (outerKey = innerKey). Note that parentheses are required after &#39;on&#39;<br /><br />Calls Linq.QueryBuilder.Join </div>
-<div class="tip" id="fs18">custom operation: select (&#39;Result)<br /><br />Calls Linq.QueryBuilder.Select </div>
+<div class="tip" id="fs18">custom operation: where (bool)<br /><br />Calls Linq.QueryBuilder.Where </div>
 <div class="tip" id="fs19">property DynamicsNAV&lt;...&gt;.SqlService.[dbo].[CRONUS International Ltd_$Customer]Entity.Name: string</div>
-<div class="tip" id="fs20">module Seq<br /><br />from Microsoft.FSharp.Collections</div>
-<div class="tip" id="fs21">val toArray : source:seq&lt;&#39;T&gt; -&gt; &#39;T []<br /><br />Full name: Microsoft.FSharp.Collections.Seq.toArray</div>
+<div class="tip" id="fs20">String.StartsWith(value: string) : bool<br />String.StartsWith(value: string, comparisonType: StringComparison) : bool<br />String.StartsWith(value: string, ignoreCase: bool, culture: Globalization.CultureInfo) : bool</div>
+<div class="tip" id="fs21">custom operation: select (&#39;Result)<br /><br />Calls Linq.QueryBuilder.Select </div>
+<div class="tip" id="fs22">module Seq<br /><br />from Microsoft.FSharp.Collections</div>
+<div class="tip" id="fs23">val toArray : source:seq&lt;&#39;T&gt; -&gt; &#39;T []<br /><br />Full name: Microsoft.FSharp.Collections.Seq.toArray</div>
 
         </div>
         <div class="span3">
