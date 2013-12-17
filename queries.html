@@ -47,19 +47,27 @@
 <span class="l"> 8: </span>
 <span class="l"> 9: </span>
 <span class="l">10: </span>
+<span class="l">11: </span>
+<span class="l">12: </span>
+<span class="l">13: </span>
+<span class="l">14: </span>
 </pre>
 </td>
 <td class="snippet"><pre class="fssnip">
 <span class="c">// count all NAV objects</span>
-<span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">query</span>{ <span class="k">for</span> <span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="i">o</span> <span class="k">in</span> <span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="i">db</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs4', 4)" onmouseover="showTip(event, 'fs4', 4)" class="i">Object</span> <span class="k">do</span>
-       <span onmouseout="hideTip(event, 'fs5', 5)" onmouseover="showTip(event, 'fs5', 5)" class="k">count</span> } 
+<span onmouseout="hideTip(event, 'fs1', 1)" onmouseover="showTip(event, 'fs1', 1)" class="i">db</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs2', 2)" onmouseover="showTip(event, 'fs2', 2)" class="i">Object</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs3', 3)" onmouseover="showTip(event, 'fs3', 3)" class="i">Count</span>()
+<span class="fsi"> val it : int = 13859</span>
+
+<span class="c">// count objects in a query expression</span>
+<span onmouseout="hideTip(event, 'fs4', 4)" onmouseover="showTip(event, 'fs4', 4)" class="i">query</span>{ <span class="k">for</span> <span onmouseout="hideTip(event, 'fs5', 5)" onmouseover="showTip(event, 'fs5', 5)" class="i">o</span> <span class="k">in</span> <span onmouseout="hideTip(event, 'fs1', 6)" onmouseover="showTip(event, 'fs1', 6)" class="i">db</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs2', 7)" onmouseover="showTip(event, 'fs2', 7)" class="i">Object</span> <span class="k">do</span>
+       <span onmouseout="hideTip(event, 'fs6', 8)" onmouseover="showTip(event, 'fs6', 8)" class="k">count</span> } 
 <span class="fsi"> val it : int = 13859</span>
 
 <span class="c">// select all customers named &quot;Steffen&quot;</span>
-<span onmouseout="hideTip(event, 'fs1', 6)" onmouseover="showTip(event, 'fs1', 6)" class="i">query</span>{ <span class="k">for</span> <span onmouseout="hideTip(event, 'fs6', 7)" onmouseover="showTip(event, 'fs6', 7)" class="i">cus</span> <span class="k">in</span> <span onmouseout="hideTip(event, 'fs3', 8)" onmouseover="showTip(event, 'fs3', 8)" class="i">db</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs7', 9)" onmouseover="showTip(event, 'fs7', 9)" class="i">Customer</span> <span class="k">do</span>
-       <span onmouseout="hideTip(event, 'fs8', 10)" onmouseover="showTip(event, 'fs8', 10)" class="k">where</span> (<span onmouseout="hideTip(event, 'fs6', 11)" onmouseover="showTip(event, 'fs6', 11)" class="i">cus</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs9', 12)" onmouseover="showTip(event, 'fs9', 12)" class="i">Name</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs10', 13)" onmouseover="showTip(event, 'fs10', 13)" class="i">StartsWith</span> <span class="s">&quot;</span><span class="s">Steffen</span><span class="s">&quot;</span>) 
-       <span onmouseout="hideTip(event, 'fs11', 14)" onmouseover="showTip(event, 'fs11', 14)" class="k">select</span> <span onmouseout="hideTip(event, 'fs6', 15)" onmouseover="showTip(event, 'fs6', 15)" class="i">cus</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs9', 16)" onmouseover="showTip(event, 'fs9', 16)" class="i">Name</span> } 
-  <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs12', 17)" onmouseover="showTip(event, 'fs12', 17)" class="i">Seq</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs13', 18)" onmouseover="showTip(event, 'fs13', 18)" class="i">toArray</span></pre>
+<span onmouseout="hideTip(event, 'fs4', 9)" onmouseover="showTip(event, 'fs4', 9)" class="i">query</span>{ <span class="k">for</span> <span onmouseout="hideTip(event, 'fs7', 10)" onmouseover="showTip(event, 'fs7', 10)" class="i">cus</span> <span class="k">in</span> <span onmouseout="hideTip(event, 'fs1', 11)" onmouseover="showTip(event, 'fs1', 11)" class="i">db</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs8', 12)" onmouseover="showTip(event, 'fs8', 12)" class="i">Customer</span> <span class="k">do</span>
+       <span onmouseout="hideTip(event, 'fs9', 13)" onmouseover="showTip(event, 'fs9', 13)" class="k">where</span> (<span onmouseout="hideTip(event, 'fs7', 14)" onmouseover="showTip(event, 'fs7', 14)" class="i">cus</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs10', 15)" onmouseover="showTip(event, 'fs10', 15)" class="i">Name</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs11', 16)" onmouseover="showTip(event, 'fs11', 16)" class="i">StartsWith</span> <span class="s">&quot;</span><span class="s">Steffen</span><span class="s">&quot;</span>) 
+       <span onmouseout="hideTip(event, 'fs12', 17)" onmouseover="showTip(event, 'fs12', 17)" class="k">select</span> <span onmouseout="hideTip(event, 'fs7', 18)" onmouseover="showTip(event, 'fs7', 18)" class="i">cus</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs10', 19)" onmouseover="showTip(event, 'fs10', 19)" class="i">Name</span> } 
+  <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs13', 20)" onmouseover="showTip(event, 'fs13', 20)" class="i">Seq</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs14', 21)" onmouseover="showTip(event, 'fs14', 21)" class="i">toArray</span></pre>
 </td>
 </tr>
 </table><h2>Joins</h2>
@@ -74,29 +82,30 @@
 </td>
 <td class="snippet"><pre class="fssnip">
 <span class="c">// select the customer name, the sales header no. and currency for all sales headers where the customer is named &quot;Steffen&quot;</span>
-<span onmouseout="hideTip(event, 'fs1', 19)" onmouseover="showTip(event, 'fs1', 19)" class="i">query</span>{ <span class="k">for</span> <span onmouseout="hideTip(event, 'fs6', 20)" onmouseover="showTip(event, 'fs6', 20)" class="i">cus</span> <span class="k">in</span> <span onmouseout="hideTip(event, 'fs3', 21)" onmouseover="showTip(event, 'fs3', 21)" class="i">db</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs7', 22)" onmouseover="showTip(event, 'fs7', 22)" class="i">Customer</span> <span class="k">do</span>
-       <span onmouseout="hideTip(event, 'fs14', 23)" onmouseover="showTip(event, 'fs14', 23)" class="k">join</span> <span onmouseout="hideTip(event, 'fs15', 24)" onmouseover="showTip(event, 'fs15', 24)" class="i">sh</span> <span class="k">in</span> <span onmouseout="hideTip(event, 'fs3', 25)" onmouseover="showTip(event, 'fs3', 25)" class="i">db</span><span class="o">.</span><span class="i">``Sales Header``</span> <span class="i">on</span> (<span class="i">cus</span><span class="o">.</span><span class="i">``No.``</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs15', 26)" onmouseover="showTip(event, 'fs15', 26)" class="i">sh</span><span class="o">.</span><span class="i">``Sell-to Customer No.``</span>)
-       <span onmouseout="hideTip(event, 'fs8', 27)" onmouseover="showTip(event, 'fs8', 27)" class="k">where</span> (<span onmouseout="hideTip(event, 'fs6', 28)" onmouseover="showTip(event, 'fs6', 28)" class="i">cus</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs9', 29)" onmouseover="showTip(event, 'fs9', 29)" class="i">Name</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs10', 30)" onmouseover="showTip(event, 'fs10', 30)" class="i">StartsWith</span> <span class="s">&quot;</span><span class="s">Steffen</span><span class="s">&quot;</span>) 
-       <span onmouseout="hideTip(event, 'fs11', 31)" onmouseover="showTip(event, 'fs11', 31)" class="k">select</span> (<span onmouseout="hideTip(event, 'fs6', 32)" onmouseover="showTip(event, 'fs6', 32)" class="i">cus</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs9', 33)" onmouseover="showTip(event, 'fs9', 33)" class="i">Name</span>,<span onmouseout="hideTip(event, 'fs15', 34)" onmouseover="showTip(event, 'fs15', 34)" class="i">sh</span><span class="o">.</span><span class="i">``No.``</span>,<span onmouseout="hideTip(event, 'fs15', 35)" onmouseover="showTip(event, 'fs15', 35)" class="i">sh</span><span class="o">.</span><span class="i">``Currency Code``</span>) } 
-  <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs12', 36)" onmouseover="showTip(event, 'fs12', 36)" class="i">Seq</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs13', 37)" onmouseover="showTip(event, 'fs13', 37)" class="i">toArray</span></pre>
+<span onmouseout="hideTip(event, 'fs4', 22)" onmouseover="showTip(event, 'fs4', 22)" class="i">query</span>{ <span class="k">for</span> <span onmouseout="hideTip(event, 'fs7', 23)" onmouseover="showTip(event, 'fs7', 23)" class="i">cus</span> <span class="k">in</span> <span onmouseout="hideTip(event, 'fs1', 24)" onmouseover="showTip(event, 'fs1', 24)" class="i">db</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs8', 25)" onmouseover="showTip(event, 'fs8', 25)" class="i">Customer</span> <span class="k">do</span>
+       <span onmouseout="hideTip(event, 'fs15', 26)" onmouseover="showTip(event, 'fs15', 26)" class="k">join</span> <span onmouseout="hideTip(event, 'fs16', 27)" onmouseover="showTip(event, 'fs16', 27)" class="i">sh</span> <span class="k">in</span> <span onmouseout="hideTip(event, 'fs1', 28)" onmouseover="showTip(event, 'fs1', 28)" class="i">db</span><span class="o">.</span><span class="i">``Sales Header``</span> <span class="i">on</span> (<span class="i">cus</span><span class="o">.</span><span class="i">``No.``</span> <span class="o">=</span> <span onmouseout="hideTip(event, 'fs16', 29)" onmouseover="showTip(event, 'fs16', 29)" class="i">sh</span><span class="o">.</span><span class="i">``Sell-to Customer No.``</span>)
+       <span onmouseout="hideTip(event, 'fs9', 30)" onmouseover="showTip(event, 'fs9', 30)" class="k">where</span> (<span onmouseout="hideTip(event, 'fs7', 31)" onmouseover="showTip(event, 'fs7', 31)" class="i">cus</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs10', 32)" onmouseover="showTip(event, 'fs10', 32)" class="i">Name</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs11', 33)" onmouseover="showTip(event, 'fs11', 33)" class="i">StartsWith</span> <span class="s">&quot;</span><span class="s">Steffen</span><span class="s">&quot;</span>) 
+       <span onmouseout="hideTip(event, 'fs12', 34)" onmouseover="showTip(event, 'fs12', 34)" class="k">select</span> (<span onmouseout="hideTip(event, 'fs7', 35)" onmouseover="showTip(event, 'fs7', 35)" class="i">cus</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs10', 36)" onmouseover="showTip(event, 'fs10', 36)" class="i">Name</span>,<span onmouseout="hideTip(event, 'fs16', 37)" onmouseover="showTip(event, 'fs16', 37)" class="i">sh</span><span class="o">.</span><span class="i">``No.``</span>,<span onmouseout="hideTip(event, 'fs16', 38)" onmouseover="showTip(event, 'fs16', 38)" class="i">sh</span><span class="o">.</span><span class="i">``Currency Code``</span>) } 
+  <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs13', 39)" onmouseover="showTip(event, 'fs13', 39)" class="i">Seq</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs14', 40)" onmouseover="showTip(event, 'fs14', 40)" class="i">toArray</span></pre>
 </td>
 </tr>
 </table>
-<div class="tip" id="fs1">val query : Linq.QueryBuilder<br /><br />Full name: Microsoft.FSharp.Core.ExtraTopLevelOperators.query</div>
-<div class="tip" id="fs2">val o : DynamicsNAV&lt;...&gt;.SqlService.[dbo].[Object]Entity</div>
-<div class="tip" id="fs3">val db : DynamicsNAV&lt;...&gt;.SqlService<br /><br />Full name: Queries.db</div>
-<div class="tip" id="fs4">property DynamicsNAV&lt;...&gt;.SqlService.Object: DynamicsNAV&lt;...&gt;.SqlService.[dbo].[Object]Set<br /><em><br /><br />&lt;summary&gt;The base table Object belonging to schema dbo&lt;/summary&gt;</em></div>
-<div class="tip" id="fs5">custom operation: count<br /><br />Calls Linq.QueryBuilder.Count </div>
-<div class="tip" id="fs6">val cus : DynamicsNAV&lt;...&gt;.SqlService.[dbo].[CRONUS International Ltd_$Customer]Entity</div>
-<div class="tip" id="fs7">property DynamicsNAV&lt;...&gt;.SqlService.Customer: DynamicsNAV&lt;...&gt;.SqlService.[dbo].[CRONUS International Ltd_$Customer]Set<br /><em><br /><br />&lt;summary&gt;The base table CRONUS International Ltd_$Customer belonging to schema dbo&lt;/summary&gt;</em></div>
-<div class="tip" id="fs8">custom operation: where (bool)<br /><br />Calls Linq.QueryBuilder.Where </div>
-<div class="tip" id="fs9">property DynamicsNAV&lt;...&gt;.SqlService.[dbo].[CRONUS International Ltd_$Customer]Entity.Name: string</div>
-<div class="tip" id="fs10">String.StartsWith(value: string) : bool<br />String.StartsWith(value: string, comparisonType: StringComparison) : bool<br />String.StartsWith(value: string, ignoreCase: bool, culture: Globalization.CultureInfo) : bool</div>
-<div class="tip" id="fs11">custom operation: select (&#39;Result)<br /><br />Calls Linq.QueryBuilder.Select </div>
-<div class="tip" id="fs12">module Seq<br /><br />from Microsoft.FSharp.Collections</div>
-<div class="tip" id="fs13">val toArray : source:seq&lt;&#39;T&gt; -&gt; &#39;T []<br /><br />Full name: Microsoft.FSharp.Collections.Seq.toArray</div>
-<div class="tip" id="fs14">custom operation: join var in collection on (outerKey = innerKey). Note that parentheses are required after &#39;on&#39;<br /><br />Calls Linq.QueryBuilder.Join </div>
-<div class="tip" id="fs15">val sh : DynamicsNAV&lt;...&gt;.SqlService.[dbo].[CRONUS International Ltd_$Sales Header]Entity</div>
+<div class="tip" id="fs1">val db : DynamicsNAV&lt;...&gt;.SqlService<br /><br />Full name: Queries.db</div>
+<div class="tip" id="fs2">property DynamicsNAV&lt;...&gt;.SqlService.Object: DynamicsNAV&lt;...&gt;.SqlService.[dbo].[Object]Set<br /><em><br /><br />&lt;summary&gt;The base table Object belonging to schema dbo&lt;/summary&gt;</em></div>
+<div class="tip" id="fs3">(extension) Collections.Generic.IEnumerable.Count&lt;&#39;TSource&gt;() : int<br />(extension) IQueryable.Count&lt;&#39;TSource&gt;() : int<br />(extension) Collections.Generic.IEnumerable.Count&lt;&#39;TSource&gt;(predicate: Func&lt;&#39;TSource,bool&gt;) : int<br />(extension) IQueryable.Count&lt;&#39;TSource&gt;(predicate: Expressions.Expression&lt;Func&lt;&#39;TSource,bool&gt;&gt;) : int</div>
+<div class="tip" id="fs4">val query : Linq.QueryBuilder<br /><br />Full name: Microsoft.FSharp.Core.ExtraTopLevelOperators.query</div>
+<div class="tip" id="fs5">val o : DynamicsNAV&lt;...&gt;.SqlService.[dbo].[Object]Entity</div>
+<div class="tip" id="fs6">custom operation: count<br /><br />Calls Linq.QueryBuilder.Count </div>
+<div class="tip" id="fs7">val cus : DynamicsNAV&lt;...&gt;.SqlService.[dbo].[CRONUS International Ltd_$Customer]Entity</div>
+<div class="tip" id="fs8">property DynamicsNAV&lt;...&gt;.SqlService.Customer: DynamicsNAV&lt;...&gt;.SqlService.[dbo].[CRONUS International Ltd_$Customer]Set<br /><em><br /><br />&lt;summary&gt;The base table CRONUS International Ltd_$Customer belonging to schema dbo&lt;/summary&gt;</em></div>
+<div class="tip" id="fs9">custom operation: where (bool)<br /><br />Calls Linq.QueryBuilder.Where </div>
+<div class="tip" id="fs10">property DynamicsNAV&lt;...&gt;.SqlService.[dbo].[CRONUS International Ltd_$Customer]Entity.Name: string</div>
+<div class="tip" id="fs11">String.StartsWith(value: string) : bool<br />String.StartsWith(value: string, comparisonType: StringComparison) : bool<br />String.StartsWith(value: string, ignoreCase: bool, culture: Globalization.CultureInfo) : bool</div>
+<div class="tip" id="fs12">custom operation: select (&#39;Result)<br /><br />Calls Linq.QueryBuilder.Select </div>
+<div class="tip" id="fs13">module Seq<br /><br />from Microsoft.FSharp.Collections</div>
+<div class="tip" id="fs14">val toArray : source:seq&lt;&#39;T&gt; -&gt; &#39;T []<br /><br />Full name: Microsoft.FSharp.Collections.Seq.toArray</div>
+<div class="tip" id="fs15">custom operation: join var in collection on (outerKey = innerKey). Note that parentheses are required after &#39;on&#39;<br /><br />Calls Linq.QueryBuilder.Join </div>
+<div class="tip" id="fs16">val sh : DynamicsNAV&lt;...&gt;.SqlService.[dbo].[CRONUS International Ltd_$Sales Header]Entity</div>
 
         </div>
         <div class="span3">
