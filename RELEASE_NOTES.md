@@ -1,4 +1,10 @@
-#### 0.0.4-alpha - 16.12.2013 
+#### 0.0.5-alpha - 17.12.2013
+
+* Added provider cache on the data context by root type name 
+	- this allows you to use many different sql provider objects on different databases 
+* Allowed a special case for individuals that have GUIDs as their primary key
+
+#### 0.0.4-alpha - 16.12.2013
 * Fixing nuget package
 
 #### 0.0.3-alpha - 16.12.2013 
