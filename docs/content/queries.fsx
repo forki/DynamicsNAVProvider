@@ -19,6 +19,10 @@ It's possible to perform LINQ queries against the Dynamics NAV database. These q
 *)
 
 // count all NAV objects
+db.Object.Count()
+// [fsi: val it : int = 13859]
+
+// count objects in a query expression
 query{ for o in db.Object do
        count } 
 // [fsi: val it : int = 13859]
