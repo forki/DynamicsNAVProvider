@@ -1,3 +1,7 @@
+#### 0.0.6-alpha - 17.12.2013
+
+* Allow count in queries
+
 #### 0.0.5-alpha - 17.12.2013
 
 * Added provider cache on the data context by root type name 

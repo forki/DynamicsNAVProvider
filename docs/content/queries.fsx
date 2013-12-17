@@ -20,8 +20,8 @@ It's possible to perform LINQ queries against the Dynamics NAV database. These q
 
 // count all NAV objects
 query{ for o in db.Object do
-       select o } 
-|> Seq.length
+       count } 
+// [fsi: val it : int = 13859]
 
 // select all customers named "Steffen"
 query{ for cus in db.Customer do
