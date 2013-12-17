@@ -113,10 +113,6 @@ module internal QueryImplementation =
                         let ty = typedefof<SqlQueryable<_>>.MakeGenericType(meth.GetGenericArguments().[0])                            
                         ty.GetConstructors().[0].Invoke [| source.ConnectionString; source.Provider; Distinct(source.SqlExpression) ; source.TupleIndex; |] :?> IQueryable<_>
 
-                    | MethodCall(None, (MethodWithName "Count" as meth), [ SourceWithQueryData source ]) ->
-                        let ty = typedefof<SqlQueryable<_>>.MakeGenericType(meth.GetGenericArguments().[0])                            
-                        ty.GetConstructors().[0].Invoke [| source.ConnectionString; source.Provider; Count(source.SqlExpression) ; source.TupleIndex; |] :?> IQueryable<_>
-
                     | MethodCall(None, (MethodWithName "Where" as meth), [ SourceWithQueryData source; OptionalQuote qual ]) ->
                         let paramNames = HashSet<string>()
 
