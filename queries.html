@@ -36,6 +36,7 @@
 <h1>DynamicsNAVProvider - Queries</h1>
 
 <p>It's possible to perform LINQ queries against the Dynamics NAV database. These queries are transformed into SQL and run on the SQL Server:</p>
+
 <table class="pre"><tr><td class="lines"><pre class="fssnip">
 <span class="l"> 1: </span>
 <span class="l"> 2: </span>
@@ -70,7 +71,10 @@
   <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs9', 15)" onmouseover="showTip(event, 'fs9', 15)" class="i">Seq</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs10', 16)" onmouseover="showTip(event, 'fs10', 16)" class="i">toArray</span></pre>
 </td>
 </tr>
-</table><h2>Joins</h2>
+</table>
+
+<h2>Joins</h2>
+
 <table class="pre"><tr><td class="lines"><pre class="fssnip">
 <span class="l">1: </span>
 <span class="l">2: </span>
@@ -90,6 +94,7 @@
 </td>
 </tr>
 </table>
+
 <div class="tip" id="fs1">val db : obj<br /><br />Full name: Queries.db</div>
 <div class="tip" id="fs2">Multiple items<br />type Object =<br />&#160;&#160;new : unit -&gt; obj<br />&#160;&#160;member Equals : obj:obj -&gt; bool<br />&#160;&#160;member GetHashCode : unit -&gt; int<br />&#160;&#160;member GetType : unit -&gt; Type<br />&#160;&#160;member ToString : unit -&gt; string<br />&#160;&#160;static member Equals : objA:obj * objB:obj -&gt; bool<br />&#160;&#160;static member ReferenceEquals : objA:obj * objB:obj -&gt; bool<br /><br />Full name: System.Object<br /><br />--------------------<br />Object() : unit</div>
 <div class="tip" id="fs3">val query : Linq.QueryBuilder<br /><br />Full name: Microsoft.FSharp.Core.ExtraTopLevelOperators.query</div>
