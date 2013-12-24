@@ -1,3 +1,10 @@
+#### 0.0.7-alpha - 24.12.2013
+
+* 
+* Option Types for nullable columns
+* Various tweaks and cleanup
+
+
 #### 0.0.6-alpha - 17.12.2013
 
 * Allow count in queries

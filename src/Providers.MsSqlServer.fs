@@ -68,7 +68,7 @@ type internal MSSqlServerProvider() =
         member __.CreateTypeMappings(con) = createTypeMappings (con:?>SqlConnection)
         member __.ClrToEnum = clrToEnum
         member __.SqlToEnum = sqlToEnum
-        member __.SqlToClr = sqlToClr
+        member __.SqlToClr = sqlToClr        
         member __.GetTables(con) =
             use reader = executeSql con "select TABLE_SCHEMA, TABLE_NAME, TABLE_TYPE from INFORMATION_SCHEMA.TABLES"
             [ while reader.Read() do 
@@ -112,8 +112,9 @@ type internal MSSqlServerProvider() =
                       | Some(clr),Some(sql) ->
                          let col =
                             { Column.Name = reader.GetSqlString(0).Value; 
-                              ClrType = clr; 
-                              DbType = sql; 
+                              ClrType = clr 
+                              DbType = sql
+                              IsNullable = let b = reader.GetString(4) in if b = "YES" then true else false
                               IsPrimarKey = if reader.GetSqlString(5).Value = "PRIMARY KEY" then true else false } 
                          if col.IsPrimarKey && pkLookup.ContainsKey table.FullName = false then pkLookup.Add(table.FullName,col.Name)
                          yield col 
@@ -244,7 +245,7 @@ type internal MSSqlServerProvider() =
                            (clrToEnum (row.["DataType"] :?> Type).FullName ) 
                            |> Option.map( fun sql ->
                                  { Name = row.["ColumnName"] :?> string; ClrType = (row.["DataType"] :?> Type ); 
-                                   DbType = sql; IsPrimarKey = false } ))
+                                   DbType = sql; IsPrimarKey = false; IsNullable=false } ))
                       |> Seq.toList
                   if schema = null || columns.Length = schema.Rows.Count then
                      Some { sproc with ReturnColumns = columns }
@@ -255,7 +256,8 @@ type internal MSSqlServerProvider() =
          )
 
         member this.GetIndividualsQueryText(table,amount) = sprintf "SELECT TOP %i * FROM %s" amount table.FullName
-
+        member this.GetIndividualQueryText(table,column) = sprintf "SELECT * FROM [%s].[%s] WHERE [%s].[%s].[%s] = @id" table.Schema table.Name table.Schema table.Name column
+        
         member this.GenerateQueryText(sqlQuery,baseAlias,baseTable,projectionColumns) = 
             let sb = System.Text.StringBuilder()
             let parameters = ResizeArray<_>()

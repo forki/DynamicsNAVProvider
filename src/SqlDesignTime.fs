@@ -30,11 +30,11 @@ type SqlTypeProvider(config: TypeProviderConfig) as this =
     let ns = "FSharp.Data"
     let asm = Assembly.GetExecutingAssembly()
     
-    let createTypes(conString,(*nullables,*)companyName,resolutionPath,individualsAmount,rootTypeName) =       
+    let createTypes(conString,(*nullables,*)companyName,resolutionPath,individualsAmount,useOptionTypes,rootTypeName) =       
         let companyName = encapsulateCompanyName companyName
         let dbVendor = Common.DatabaseProviderTypes.MSSQLSERVER
         let prov = Common.Utilities.createSqlProvider dbVendor resolutionPath
-        let con = prov.CreateConnection conString
+        let con = prov.CreateConnection conString 
         con.Open()
         prov.CreateTypeMappings con
         
@@ -144,9 +144,6 @@ type SqlTypeProvider(config: TypeProviderConfig) as this =
                         let prop = ProvidedProperty("Individuals",Seq.head it, GetterCode = fun _ -> <@@ new obj() @@> )
                         prop.AddXmlDoc(sprintf "A sample of %s individuals from the SQL object" name)
                         ct.AddMemberDelayed( fun () -> prop :> MemberInfo )                        
-//                        let meth = ProvidedMethod("Create",[],et, IsStaticMethod = false, InvokeCode = fun _ -> <@@ SqlEntity(name) @@>)
-//                        meth.AddXmlDoc(sprintf "Creates a new instance of the %s entity" name)
-//                        ct.AddMemberDelayed( fun () -> meth :> MemberInfo )
                         yield table.FullName,(ct,it) ]  
         
         // add the attributes and relationships
@@ -154,18 +151,29 @@ type SqlTypeProvider(config: TypeProviderConfig) as this =
             t.AddMembersDelayed(fun () -> 
                 let (columns,(children,parents)) = getTableColumns key
                 let attProps = 
-                    let createColumnProperty ty (name:string) description =
+                    let createColumnProperty c =
+                        let nullable = useOptionTypes && c.IsNullable                        
+                        let ty = if nullable then typedefof<option<_>>.MakeGenericType(c.ClrType)
+                                 else c.ClrType 
+                        let name = c.Name
                         let prop = 
                             ProvidedProperty(
                                 buildFieldName(name),ty,
                                 GetterCode = (fun args ->
-                                    let meth = typeof<SqlEntity>.GetMethod("GetColumn").MakeGenericMethod([|ty|])
+                                    let meth = if nullable then typeof<SqlEntity>.GetMethod("GetColumnOption").MakeGenericMethod([|c.ClrType|])
+                                               else  typeof<SqlEntity>.GetMethod("GetColumn").MakeGenericMethod([|ty|])
                                     Expr.Call(args.[0],meth,[Expr.Value name])),
                                 SetterCode = (fun args ->
-                                    let meth = typeof<SqlEntity>.GetMethod "SetColumn" 
-                                    Expr.Call(args.[0],meth,[Expr.Value name;Expr.Coerce(args.[1], typeof<obj>)])))
+                                    if nullable then 
+                                        // setter code is not going to work yet.
+                                        let meth = typeof<SqlEntity>.GetMethod("SetColumnOption").MakeGenericMethod([|c.ClrType|])
+                                        Expr.Call(args.[0],meth,[Expr.Value name;args.[1]])
+                                    else      
+                                        let meth = typeof<SqlEntity>.GetMethod("SetColumn").MakeGenericMethod([|c.ClrType|])
+                                        Expr.Call(args.[0],meth,[Expr.Value name;args.[1]]))
+                                    )
                         prop
-                    columns |> List.map (fun c -> createColumnProperty c.ClrType c.Name "")
+                    List.map createColumnProperty columns
                 let relProps =
                     [ for r in children do                       
                         let (tt,_,_) = (baseTypes.Force().[r.ForeignTable])
@@ -284,7 +292,7 @@ type SqlTypeProvider(config: TypeProviderConfig) as this =
     let paramSqlType = ProvidedTypeDefinition(sqlRuntimeInfo.RuntimeAssembly, ns, "DynamicsNAV", Some(typeof<obj>), HideObjectMethods = true)
     
     let conString = ProvidedStaticParameter("ConnectionString",typeof<string>)    
-    //let nullables = ProvidedStaticParameter("UseNullableValues",typeof<bool>,false)
+    let optionTypes = ProvidedStaticParameter("UseOptionTypes",typeof<bool>,false)
     let companyName = ProvidedStaticParameter("Company",typeof<string>)
     let dbVendor = ProvidedStaticParameter("DatabaseVendor",typeof<DatabaseProviderTypes>,DatabaseProviderTypes.MSSQLSERVER)
     let individualsAmount = ProvidedStaticParameter("IndividualsAmount",typeof<int>,1000)    
@@ -293,6 +301,7 @@ type SqlTypeProvider(config: TypeProviderConfig) as this =
                     <param name='ConnectionString'>The connection string for the sql server</param>
                     <param name='Company'>The company</param>
                     <param name='IndividualsAmount'>The amount of sample entities to project into the type system for each sql entity type. Default 1000.</param>
+                    <param name='UseOptionTypes'>If true, F# option types will be used in place of nullable database columns.  If false, you will always receive the default value of the column's type even if it is null in the database.</param>
                     <param name='ResolutionPath'>The location to look for dynamically loaded assemblies containing database vendor specifc connections and custom types.</param>"
         
     do paramSqlType.DefineStaticParameters([conString;companyName;resolutionPath;individualsAmount], fun typeName args -> 
@@ -300,7 +309,7 @@ type SqlTypeProvider(config: TypeProviderConfig) as this =
                     args.[1] :?> string,                  // Company
                     args.[2] :?> string,                  // Assembly resolution path for db connectors and custom types
                     args.[3] :?> int,                     // Indiduals Amount
-                    
+                    args.[4] :?> bool,                    // Use option types?
                     typeName))
 
     do paramSqlType.AddXmlDoc helpText               

@@ -48,9 +48,16 @@ module internal QueryImplementation =
        use cmd = provider.CreateCommand(con,query)   
        for p in parameters do cmd.Parameters.Add p |> ignore       
        // ignore any generated projection and just expect a single integer back
-       let result = cmd.ExecuteScalar()
+       let result = 
+        match cmd.ExecuteScalar() with
+        | :? string as s -> Int32.Parse s
+        | :? int as i -> i
+        | :? int16 as i -> int32 i
+        | :? int64 as i -> int32 i  // LINQ says we must return a 32bit int so its possible to lose data here.
+        | x -> con.Close()
+               failwithf "Count retruned something other than a 32 bit integer : %s " (x.GetType().ToString())
        con.Close()
-       result
+       box result
        
     type SqlQueryable<'T>(conString:string,provider,sqlQuery,tupleIndex) =       
         static member Create(table,conString,provider) = 
@@ -127,7 +134,6 @@ module internal QueryImplementation =
 
                     | MethodCall(None, (MethodWithName "Where" as meth), [ SourceWithQueryData source; OptionalQuote qual ]) ->
                         let paramNames = HashSet<string>()
-
                         let (|Condition|_|) exp =   
                             // IMPORTANT : for now it is always assumed that the table column being checked on the server side is on the left hand side of the condition expression.
                             match exp with
@@ -137,32 +143,15 @@ module internal QueryImplementation =
                             | SqlSpecialOp(ti,op,key,value) ->  
                                 paramNames.Add(ti) |> ignore
                                 Some(ti,key,op,Some value)
-                            // matches column to constant with any operator eg c => c.name = "john", c => c.age > 42
-                            | SqlCondOp(op,(SqlColumnGet(ti,key,_)),ConstantOrNullableConstant(c)) -> 
-                                paramNames.Add(ti) |> ignore
-                                Some(ti,key,op,c)
-                            // if the left side is a memberexpression it is likely referencing a column of a table in a join, or the Value / HasValue property of a nullable type.
-                            // when accessing the value checking the column as normal, the Value can be ignored.  HasValue should be translated into
-                            // Null / Not null 
-                            | PropertyGet(Some(SqlColumnGet(ti,key,_)),pi) when pi.Name = "HasValue" -> 
+                            // if using nullable types
+                            | OptionIsSome(SqlColumnGet(ti,key,_)) ->
                                 paramNames.Add(ti) |> ignore
                                 Some(ti,key,ConditionOperator.NotNull,None)
-                            | SqlCondOp(op,PropertyGet(Some(SqlColumnGet(ti,key,_)),pi),ConstantOrNullableConstant(c)) when pi.Name = "Value" -> 
-                                // this is a special case for nullable enums, which you cannot use the nullable operators with due to restrictions in the type provider
-                                // mechanics meaning there is no way to trick the compiler into treating the provided enum as a value type.
-                                // this is a workaround allowing the nullable enums to be used in the format where  a.code.Value = Enum.Item
+                            | OptionIsNone(SqlColumnGet(ti,key,_)) ->
                                 paramNames.Add(ti) |> ignore
-                                Some(ti,key,op,c)
-                            | SqlCondOp(op,PropertyGet(Some(SqlColumnGet(ti,key,_) ),pi),Bool(c)) when pi.Name = "HasValue"  -> 
-                                paramNames.Add(ti) |> ignore
-                                match c with
-                                | true -> Some(ti,key,ConditionOperator.NotNull,None)
-                                | false -> Some(ti,key,ConditionOperator.IsNull,None)
-                            | SqlCondOp(op,(:? MemberExpression as methL),ConstantOrNullableConstant(c)) -> 
-                                let ti,key =  
-                                  match methL.Expression with
-                                  | SqlColumnGet(ti,key,ty) -> ti,key
-                                  | _ -> failwith "Unsupported member expression on left side"    
+                                Some(ti,key,ConditionOperator.IsNull,None)
+                            // matches column to constant with any operator eg c.name = "john", c.age > 42
+                            | SqlCondOp(op,(SqlColumnGet(ti,key,_)),ConstantOrNullableConstant(c)) -> 
                                 paramNames.Add(ti) |> ignore
                                 Some(ti,key,op,c)
                             // matches to another property getter, method call or new expression
@@ -262,11 +251,11 @@ module internal QueryImplementation =
                                 let outExp = processSelectManys projectionParams.[0].Name createRelated outExp                                
                                 processSelectManys projectionParams.[1].Name inner outExp
                              | MethodCall(None, (MethodWithName "Join"), 
-                                [createRelated
-                                 Convert(MethodCall(_, (MethodWithName "_CreateEntities"), [_; String destEntity] ))
-                                 OptionalQuote (Lambda([ParamName sourceAlias],SqlColumnGet(sourceTi,sourceKey,_)))                                       
-                                 OptionalQuote (Lambda([ParamName destAlias],SqlColumnGet(destTi,destKey,_)))                                       
-                                 OptionalQuote (Lambda(projectionParams,_))]) ->
+                                                    [createRelated
+                                                     Convert(MethodCall(_, (MethodWithName "_CreateEntities"), [_; String destEntity] ))
+                                                     OptionalQuote (Lambda([ParamName sourceAlias],SqlColumnGet(sourceTi,sourceKey,_)))                                       
+                                                     OptionalQuote (Lambda([ParamName destAlias],SqlColumnGet(destTi,destKey,_)))                                       
+                                                     OptionalQuote (Lambda(projectionParams,_))]) ->
                                 // this case happens when the select many also includes one or more joins in the same tree.
                                 // in this situation, the first agrument will either be an additional nested join method call,
                                 // or finally it will be the call to _CreatedRelated which is handled recursively in the next case
@@ -322,7 +311,7 @@ module internal QueryImplementation =
                         | _ -> raise <| InvalidOperationException("Encountered more than one element in the input sequence")
                     | MethodCall(None, (MethodWithName "Count" as meth), [Constant(query,_)] ) ->  
                         let svc = (query:?>IWithSqlService)                        
-                        executeQueryScalar svc.ConnectionString svc.Provider (Count(svc.SqlExpression)) svc.TupleIndex :?> 'T
+                        executeQueryScalar svc.ConnectionString svc.Provider (Count(svc.SqlExpression)) svc.TupleIndex :?> 'T 
                     | _ -> failwith "Unuspported execution expression" }
 
 type public SqlDataContext (typeName,connectionString:string,providerType,resolutionPath) =   
@@ -392,7 +381,7 @@ type public SqlDataContext (typeName,connectionString:string,providerType,resolu
                   // this fail case should not really be possible unless the runime database is different to the design-time one
                   failwithf "Primary key could not be found on object %s. Individuals only supported on objects with a single primary key." table.FullName         
         
-           use com = provider.CreateCommand(con,sprintf "SELECT * FROM %s WHERE %s = @id" table.FullName pk)
+           use com = provider.CreateCommand(con,provider.GetIndividualQueryText(table,pk))
            //todo: establish pk sql data type
            com.Parameters.Add (provider.CreateCommandParameter("@id",id,None)) |> ignore
            use reader = com.ExecuteReader()
