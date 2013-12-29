@@ -29,7 +29,7 @@
     </DocumentationFile>
     <StartAction>Program</StartAction>
     <StartProgram>C:\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\devenv.exe</StartProgram>
-    <StartArguments>C:\Users\Steffen\Dropbox\Code\SqlProvider\tests\DynamicsNAVProvider.Tests.sln</StartArguments>
+    <StartArguments>C:\Users\Steffen\Dropbox\Code\DynamicsNAVProvider\DynamicsNAVProvider.Docs.sln</StartArguments>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
