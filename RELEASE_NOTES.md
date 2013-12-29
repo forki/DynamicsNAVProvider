@@ -1,9 +1,11 @@
+#### 0.1.0-alpha - 29.12.2013
+
+* Fixed: Option Types for nullable columns
+
 #### 0.0.7-alpha - 24.12.2013
 
-* 
 * Option Types for nullable columns
 * Various tweaks and cleanup
-
 
 #### 0.0.6-alpha - 17.12.2013
 

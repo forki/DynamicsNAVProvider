@@ -304,7 +304,7 @@ type SqlTypeProvider(config: TypeProviderConfig) as this =
                     <param name='UseOptionTypes'>If true, F# option types will be used in place of nullable database columns.  If false, you will always receive the default value of the column's type even if it is null in the database.</param>
                     <param name='ResolutionPath'>The location to look for dynamically loaded assemblies containing database vendor specifc connections and custom types.</param>"
         
-    do paramSqlType.DefineStaticParameters([conString;companyName;resolutionPath;individualsAmount], fun typeName args -> 
+    do paramSqlType.DefineStaticParameters([conString;companyName;resolutionPath;individualsAmount;optionTypes], fun typeName args -> 
         createTypes(args.[0] :?> string,                  // OrganizationServiceUrl
                     args.[1] :?> string,                  // Company
                     args.[2] :?> string,                  // Assembly resolution path for db connectors and custom types
