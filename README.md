@@ -8,7 +8,8 @@ It's supporting LINQ queries, schema exploration and much more besides.
 
 ## Building
 
-run build.cmd
+* Mono: Run *build.sh*  [![Mono build status](https://travis-ci.org/fsprojects/DynamicsNAVProvider.png)](https://travis-ci.org/fsprojects/DynamicsNAVProvider)
+* Windows: Run *build.cmd* 
 
 ## Disclaimer
 
