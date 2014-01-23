@@ -30,7 +30,7 @@ type SqlTypeProvider(config: TypeProviderConfig) as this =
     let ns = "FSharp.Data"
     let asm = Assembly.GetExecutingAssembly()
     
-    let createTypes(conString,(*nullables,*)companyName,resolutionPath,individualsAmount,useOptionTypes,rootTypeName) =       
+    let createTypes(conString,companyName,resolutionPath,individualsAmount,useOptionTypes,rootTypeName) =       
         let companyName = encapsulateCompanyName companyName
         let dbVendor = Common.DatabaseProviderTypes.MSSQLSERVER
         let prov = Common.Utilities.createSqlProvider dbVendor resolutionPath
@@ -308,7 +308,7 @@ type SqlTypeProvider(config: TypeProviderConfig) as this =
         createTypes(args.[0] :?> string,                  // OrganizationServiceUrl
                     args.[1] :?> string,                  // Company
                     args.[2] :?> string,                  // Assembly resolution path for db connectors and custom types
-                    args.[3] :?> int,                     // Indiduals Amount
+                    args.[3] :?> int,                     // Individuals Amount
                     args.[4] :?> bool,                    // Use option types?
                     typeName))
 
