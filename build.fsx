@@ -21,9 +21,9 @@ let tags = "F# fsharp typeproviders dynamics nav"
 let solutionFile  = "DynamicsNAVProvider"
 
 let testAssemblies = "tests/**/bin/Release/*.Tests*.dll"
-let gitHome = "https://github.com/forki"
+let gitHome = "https://github.com/fsprojects"
 let gitName = "DynamicsNAVProvider"
-let cloneUrl = "git@github.com:forki/DynamicsNAVProvider.git"
+let cloneUrl = "git@github.com:fsprojects/DynamicsNAVProvider.git"
 let nugetDir = "./nuget/"
 
 // Read additional information from the release notes document

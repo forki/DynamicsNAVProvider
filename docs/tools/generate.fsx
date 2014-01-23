@@ -13,7 +13,7 @@ let info =
   [ "project-name", "DynamicsNAVProvider"
     "project-author", "Steffen Forkmann"
     "project-summary", "Type providers for Dynamics NAV access."
-    "project-github", "http://github.com/forki/DynamicsNAVProvider"
+    "project-github", "http://github.com/fsprojects/DynamicsNAVProvider"
     "project-nuget", "http://nuget.com/packages/DynamicsNAVProvider" ]
 
 // --------------------------------------------------------------------------------------

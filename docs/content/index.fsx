@@ -84,9 +84,9 @@ The library is available under Public Domain license, which allows modification 
 redistribution for both commercial and non-commercial purposes. For more information see the 
 [License file][license] in the GitHub repository. 
 
-  [content]: https://github.com/forki/DynamicsNAVProvider/tree/master/docs/content
-  [gh]: https://github.com/forki/DynamicsNAVProvider
-  [issues]: https://github.com/forki/DynamicsNAVProvider/issues
-  [readme]: https://github.com/forki/DynamicsNAVProvider/blob/master/README.md
-  [license]: https://github.com/forki/DynamicsNAVProvider/blob/master/LICENSE.md
+  [content]: https://github.com/fsprojects/DynamicsNAVProvider/tree/master/docs/content
+  [gh]: https://github.com/fsprojects/DynamicsNAVProvider
+  [issues]: https://github.com/fsprojects/DynamicsNAVProvider/issues
+  [readme]: https://github.com/fsprojects/DynamicsNAVProvider/blob/master/README.md
+  [license]: https://github.com/fsprojects/DynamicsNAVProvider/blob/master/LICENSE.md
 *)
