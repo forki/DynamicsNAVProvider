@@ -1,3 +1,8 @@
+#### 0.1.0 - 27.01.2014
+
+* Various option type fixes
+* GraphViz script to help visualize LINQ trees when debugging
+
 #### 0.1.0-alpha - 29.12.2013
 
 * Fixed: Option Types for nullable columns
