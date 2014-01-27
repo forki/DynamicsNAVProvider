@@ -26,6 +26,11 @@ let gitName = "DynamicsNAVProvider"
 let cloneUrl = "git@github.com:fsprojects/DynamicsNAVProvider.git"
 let nugetDir = "./nuget/"
 
+// --------------------------------------------------------------------------------------
+// END TODO: The rest of the file includes standard build steps 
+// --------------------------------------------------------------------------------------
+
+
 // Read additional information from the release notes document
 Environment.CurrentDirectory <- __SOURCE_DIRECTORY__
 let release = parseReleaseNotes (IO.File.ReadAllLines "RELEASE_NOTES.md")
@@ -44,10 +49,7 @@ Target "AssemblyInfo" (fun _ ->
 // --------------------------------------------------------------------------------------
 // Clean build results & restore NuGet packages
 
-Target "RestorePackages" (fun _ ->
-    !! "./**/packages.config"
-    |> Seq.iter (RestorePackage (fun p -> { p with ToolPath = "./.nuget/NuGet.exe" }))
-)
+Target "RestorePackages" RestorePackages
 
 Target "Clean" (fun _ ->
     CleanDirs ["bin"; "temp"; nugetDir]
@@ -61,15 +63,22 @@ Target "CleanDocs" (fun _ ->
 // Build library & test project
 
 Target "Build" (fun _ ->
-    !! (solutionFile + ".sln")
-    |> MSBuildRelease "" "Rebuild"
-    |> ignore
-
-    !! (solutionFile + ".Tests.sln")
+    !! (solutionFile + "*.sln")
     |> MSBuildRelease "" "Rebuild"
     |> ignore
 )
 
+// --------------------------------------------------------------------------------------
+// Run the unit tests using test runner
+
+Target "RunTests" (fun _ ->
+    !! testAssemblies 
+    |> NUnit (fun p ->
+        { p with
+            DisableShadowCopy = true
+            TimeOut = TimeSpan.FromMinutes 20.
+            OutputFile = "TestResults.xml" })
+)
 
 // --------------------------------------------------------------------------------------
 // Build a NuGet package
@@ -111,16 +120,15 @@ Target "GenerateDocs" (fun _ ->
 // Release Scripts
 
 Target "ReleaseDocs" (fun _ ->
-    let ghPages      = "gh-pages"
-    let ghPagesLocal = "temp/gh-pages"
-    Repository.clone "temp" (cloneUrl) ghPages
-    Branches.checkoutBranch ghPagesLocal ghPages
-    fullclean "temp/gh-pages"
-    CopyRecursive "docs/output" ghPagesLocal true |> printfn "%A"
-    CommandHelper.runSimpleGitCommand ghPagesLocal "add ." |> printfn "%s"
-    let cmd = sprintf """commit -a -m "Update generated documentation for version %s""" release.NugetVersion
-    CommandHelper.runSimpleGitCommand ghPagesLocal cmd |> printfn "%s"
-    Branches.push ghPagesLocal
+    let tempDocsDir = "temp/gh-pages"
+    CleanDir tempDocsDir
+    Repository.cloneSingleBranch "" (gitHome + "/" + gitName + ".git") "gh-pages" tempDocsDir
+
+    fullclean tempDocsDir
+    CopyRecursive "docs/output" tempDocsDir true |> tracefn "%A"
+    StageAll tempDocsDir
+    Commit tempDocsDir (sprintf "Update generated documentation for version %s" release.NugetVersion)
+    Branches.push tempDocsDir
 )
 
 Target "Release" DoNothing
