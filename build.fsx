@@ -26,10 +26,6 @@ let gitName = "DynamicsNAVProvider"
 let cloneUrl = "git@github.com:fsprojects/DynamicsNAVProvider.git"
 let nugetDir = "./nuget/"
 
-// --------------------------------------------------------------------------------------
-// END TODO: The rest of the file includes standard build steps 
-// --------------------------------------------------------------------------------------
-
 
 // Read additional information from the release notes document
 Environment.CurrentDirectory <- __SOURCE_DIRECTORY__
@@ -37,7 +33,7 @@ let release = parseReleaseNotes (IO.File.ReadAllLines "RELEASE_NOTES.md")
 
 // Generate assembly info files with the right version & up-to-date information
 Target "AssemblyInfo" (fun _ ->
-  let fileName = "src/AssemblyInfo.fs"
+  let fileName = "src/" + project + "/AssemblyInfo.fs"
   CreateFSharpAssemblyInfo fileName
       [ Attribute.Title project
         Attribute.Product project
@@ -128,7 +124,7 @@ Target "ReleaseDocs" (fun _ ->
     CopyRecursive "docs/output" tempDocsDir true |> tracefn "%A"
     StageAll tempDocsDir
     Commit tempDocsDir (sprintf "Update generated documentation for version %s" release.NugetVersion)
-    Branches.push tempDocsDir
+    Branches.pushBranch tempDocsDir "origin" "gh-pages"
 )
 
 Target "Release" DoNothing

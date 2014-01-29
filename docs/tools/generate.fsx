@@ -13,7 +13,7 @@ let githubLink = "http://github.com/fsprojects/DynamicsNAVProvider"
 // Specify more information about your project
 let info =
   [ "project-name", "DynamicsNAVProvider"
-    "project-author", "Steffen Forkmann"
+    "project-author", "Steffen Forkmann, Ross McKinlay"
     "project-summary", "Type providers for Dynamics NAV access."
     "project-github", githubLink
     "project-nuget", "http://nuget.com/packages/DynamicsNAVProvider" ]

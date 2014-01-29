@@ -4,11 +4,9 @@ DynamicsNAVProvider
 A type provider which allows to access Microsoft Dynamics NAV data from a SQL Server in a strongly typed way.
 It's supporting LINQ queries, schema exploration and much more besides.
 
-<a href="http://fsprojects.github.io/DynamicsNAVProvider" target="_blank">Documentation is available here.</a>
-
 ## Documentation
 
-Core documentation and samples can be found at the [DynamicsNAVProvider home page](http://fsprojects.github.io/DynamicsNAVProvider).  This documentation is generated from [docs/content/](https://github.com/fsprojects/DyanamicsNAVProvider/tree/master/docs/content), so please feel free to submit a pull request if you have fixed typos are added additional samples and documentation!
+Core documentation and samples can be found at the [DynamicsNAVProvider home page](http://fsprojects.github.io/DynamicsNAVProvider). This documentation is generated from [docs/content/](https://github.com/fsprojects/DyanamicsNAVProvider/tree/master/docs/content), so please feel free to submit a pull request if you have fixed typos are added additional samples and documentation!
 
 ## Building
 
