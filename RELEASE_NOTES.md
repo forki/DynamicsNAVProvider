@@ -1,3 +1,7 @@
+#### 0.1.1 - 30.01.2014
+
+* Merged Fixes in the SQLProvider
+
 #### 0.1.0 - 27.01.2014
 
 * Various option type fixes
