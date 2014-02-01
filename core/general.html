@@ -172,7 +172,7 @@ You can extend this basic query include to filter criteria by introducing one or
 <span class="k">let</span> <span onmouseout="hideTip(event, 'fs18', 37)" onmouseover="showTip(event, 'fs18', 37)" class="i">multipleFilteredQuery</span> <span class="o">=</span>
     <span onmouseout="hideTip(event, 'fs13', 38)" onmouseover="showTip(event, 'fs13', 38)" class="i">query</span> { <span class="k">for</span> <span onmouseout="hideTip(event, 'fs14', 39)" onmouseover="showTip(event, 'fs14', 39)" class="i">customer</span> <span class="k">in</span> <span onmouseout="hideTip(event, 'fs5', 40)" onmouseover="showTip(event, 'fs5', 40)" class="i">ctx</span><span class="o">.</span><span class="i">``[main].[Customers]``</span> <span class="k">do</span>
             <span onmouseout="hideTip(event, 'fs17', 41)" onmouseover="showTip(event, 'fs17', 41)" class="k">where</span> ((<span onmouseout="hideTip(event, 'fs14', 42)" onmouseover="showTip(event, 'fs14', 42)" class="i">customer</span><span class="o">.</span><span class="i">ContactName</span> <span class="o">=</span> <span class="s">&quot;</span><span class="s">John</span><span class="s"> </span><span class="s">Smith</span><span class="s">&quot;</span> <span class="o">&amp;&amp;</span> <span onmouseout="hideTip(event, 'fs14', 43)" onmouseover="showTip(event, 'fs14', 43)" class="i">customer</span><span class="o">.</span><span class="i">Country</span> <span class="o">=</span> <span class="s">&quot;</span><span class="s">England</span><span class="s">&quot;</span>) 
-            		<span class="o">||</span> <span onmouseout="hideTip(event, 'fs14', 44)" onmouseover="showTip(event, 'fs14', 44)" class="i">customer</span><span class="o">.</span><span class="i">ContactName</span> <span class="o">=</span> <span class="s">&quot;</span><span class="s">Joe</span><span class="s"> </span><span class="s">Bloggs</span><span class="s">&quot;</span>)
+                    <span class="o">||</span> <span onmouseout="hideTip(event, 'fs14', 44)" onmouseover="showTip(event, 'fs14', 44)" class="i">customer</span><span class="o">.</span><span class="i">ContactName</span> <span class="o">=</span> <span class="s">&quot;</span><span class="s">Joe</span><span class="s"> </span><span class="s">Bloggs</span><span class="s">&quot;</span>)
             <span onmouseout="hideTip(event, 'fs15', 45)" onmouseover="showTip(event, 'fs15', 45)" class="k">select</span> <span onmouseout="hideTip(event, 'fs14', 46)" onmouseover="showTip(event, 'fs14', 46)" class="i">customer</span> } <span class="o">|&gt;</span> <span onmouseout="hideTip(event, 'fs7', 47)" onmouseover="showTip(event, 'fs7', 47)" class="i">Seq</span><span class="o">.</span><span onmouseout="hideTip(event, 'fs8', 48)" onmouseover="showTip(event, 'fs8', 48)" class="i">toArray</span></pre>
 </td>
 </tr>
@@ -211,7 +211,7 @@ To access related data, you can either enumerate directly over the constraint pr
 </tr>
 </table>
 
-<p>Both of these queries have identical results, it's just one requires explicit knowledge of what tables join to what and how, and the other doesn't.
+<p>Both of these queries have identical results, it's just one requires explicit knowledge of which tables join where and how, and the other doesn't.
 You might have noticed the select expression has now changed to (customer,order). 
 As you may expect, this will return an array of tuples where the first item is a <code>[Main].[Customers]Entity</code> and the second a <code>[Main].[Orders]Entity</code>.
 Often you will not be interested in selecting entire entities from the database.
@@ -238,7 +238,7 @@ Changing the select expression to use the entities' properties will cause the SQ
 <p>The results of this query will return the name, order date and ship address only.  By doing this you no longer have access to entity types.
 The SQL provider supports various other query keywords and features that you can read about elsewhere in this documentation.</p>
 
-<h3>Individuals</h3>
+<h2>Individuals</h2>
 
 <p>The SQL provider has the ability via intellisense to navigate the actual data held within a table or view. You can then bind that data as an entity to a value.</p>
 
