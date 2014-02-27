@@ -1,3 +1,7 @@
+#### 0.1.2 - 27.02.2014
+
+* Added support for head / First()
+
 #### 0.1.1 - 30.01.2014
 
 * Merged Fixes in the SQLProvider
