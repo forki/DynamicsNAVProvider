@@ -18,3 +18,10 @@ Core documentation and samples can be found at the [DynamicsNAVProvider home pag
 This is an alpha build and as such may have problems yet undetected. This is not suitable for production use.  I am not responsible for any inadvertent damage and destruction caused by this software. 
 
 Always fully assert the results of your queries!
+
+
+## Maintainer(s)
+
+- [@forki](https://github.com/forki)
+
+The default maintainer account for projects under "fsprojects" is [@fsgit](https://github.com/fsgit) - F# Community Project Incubation Space (repo management)
