@@ -1,8 +1,11 @@
+[![Issue Stats](http://issuestats.com/github/fsprojects/DynamicsNAVProvider/badge/issue)](http://issuestats.com/github/fsprojects/DynamicsNAVProvider)
+[![Issue Stats](http://issuestats.com/github/fsprojects/DynamicsNAVProvider/badge/pr)](http://issuestats.com/github/fsprojects/DynamicsNAVProvider)
+
 DynamicsNAVProvider
 ===================
 
 A type provider which allows to access Microsoft Dynamics NAV data from a SQL Server in a strongly typed way.
-It's supporting LINQ queries, schema exploration and much more besides.
+It's supporting LINQ queries, schema exploration and much more besides. [![NuGet Status](http://img.shields.io/nuget/v/DynamicsNAVProvider.svg?style=flat)](https://www.nuget.org/packages/DynamicsNAVProvider/)
 
 ## Documentation
 
